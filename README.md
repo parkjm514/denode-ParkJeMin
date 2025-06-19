@@ -3,6 +3,8 @@
 ## 도커 실행 명령어
 
 ```bash
+$ docker-compose build --no-cache
+
 $ docker-compose --env-file ./envs/.env.dev up --build
 ```
 
