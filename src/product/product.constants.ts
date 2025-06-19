@@ -1,0 +1,36 @@
+export const constants = {
+  props: { UNIQUE_PRODUCT_NAME: 'UNIQUE_PRODUCT_NAME' },
+
+  errorMessage: {
+    PRODUCT_NOT_FOUND: {
+      errorCode: 'PRODUCT_NOT_FOUND',
+    },
+    PRODUCT_CONFLICT_NAME: {
+      errorCode: 'PRODUCT_CONFLICT_NAME',
+    },
+    PRODUCT_INVENTORY_INVAILD_AMOUNT: {
+      errorCode: 'PRODUCT_INVENTORY_INVAILD_AMOUNT',
+    },
+    PRODUCT_INVENTORY_EXPIRED: {
+      errorCode: 'PRODUCT_INVENTORY_INVAILD_AMOUNT',
+    },
+    PRODUCT_INVENTORY_NOT_FOUND: {
+      errorCode: 'PRODUCT_INVENTORY_NOT_FOUND',
+    },
+    PRODUCT_INVENTORY_HISTORY_NOT_FOUND: {
+      errorCode: 'PRODUCT_INVENTORY_HISTORY_NOT_FOUND',
+    },
+    PRODUCT_INVENTORY_FAIL_TO_UPDATE: {
+      errorCode: 'PRODUCT_INVENTORY_FAIL_TO_UPDATE',
+    },
+    PRODUCT_INVENTORY_NOT_ENOUGH: {
+      errorCode: 'PRODUCT_INVENTORY_NOT_ENOUGH',
+    },
+  },
+};
+
+export enum RecevingShippingType {
+  RECEVING = 'RECEVING',
+  SHIPPING = 'SHIPPING',
+  EXPERING = 'EXPERING',
+}
