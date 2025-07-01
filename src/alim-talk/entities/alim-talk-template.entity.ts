@@ -50,7 +50,7 @@ export class AlimTalkTemplate extends CoreEntity {
   alimTalkTitle: string;
 
   @ApiProperty({
-    example: "홍길동님이 회원가입 완료되었습니다.",
+    example: "{name}님이 회원가입 완료되었습니다.",
     description: "알림톡 내용",
     required: true,
   })
