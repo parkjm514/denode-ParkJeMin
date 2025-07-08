@@ -55,4 +55,19 @@ export class AlimTalkLog extends CoreEntity {
     nullable: true,
   })
   isSendingSuccess: boolean;
+
+  @ApiProperty({
+    example: "1234",
+    description: "알림톡 코드",
+    required: true,
+  })
+  @IsString()
+  @Length(1, 100)
+  @Column({
+    comment: "알림톡 템플릿 코드",
+    type: "varchar",
+    length: 100,
+    nullable: false,
+  })
+  alimTalkTemplateCode: string;
 }

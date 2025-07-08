@@ -17,7 +17,7 @@ export class AlimTalkTemplate extends CoreEntity {
       cascade: true,
     }
   )
-  alimTalkTemplateReplacers: AlimTalkTemplateReplacer;
+  alimTalkTemplateReplacers: AlimTalkTemplateReplacer[];
 
   @ApiProperty({
     example: "1234",
@@ -33,6 +33,21 @@ export class AlimTalkTemplate extends CoreEntity {
     nullable: false,
   })
   alimTalkTemplateCode: string;
+
+  @ApiProperty({
+    example: "SING_UP_ADMINISTRATOR",
+    description: "알림톡 키워드",
+    required: true,
+  })
+  @IsString()
+  @Length(1, 100)
+  @Column({
+    comment: "알림톡 템플릿 키워드",
+    type: "varchar",
+    length: 100,
+    nullable: false,
+  })
+  alimTalkTemplateKeyWord: string;
 
   @ApiProperty({
     example: "회원가입 안내",
