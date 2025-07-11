@@ -8,10 +8,10 @@ import { Column, Entity, ManyToOne } from "typeorm";
   name: "AlimTalkLog",
 })
 export class AlimTalkLog extends CoreEntity {
-  @ManyToOne(() => Administrator, (administrator) => administrator.id, {
-    nullable: true,
-  })
-  administratorId: number;
+  // @ManyToOne(() => Administrator, (administrator) => administrator.id, {
+  //   nullable: true,
+  // })
+  // administratorId: number;
 
   @ApiProperty({
     example: "알림톡 제목 로그",

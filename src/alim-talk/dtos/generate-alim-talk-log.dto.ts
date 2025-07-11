@@ -5,6 +5,4 @@ export class GenerateAlimTalkLogDto extends PickType(AlimTalkLog, [
   "alimTalkTitleLog",
   "alimTalkContentLog",
   "isSendingSuccess",
-]) {
-  administratorId: number;
-}
+]) {}

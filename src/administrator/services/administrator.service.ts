@@ -1,24 +1,24 @@
-import { GenerateAdministratorDto } from '../dtos/generate-administrator.dto';
-import { DataSource, EntityManager } from 'typeorm';
-import { FindAdministratorDto } from '../dtos/find-administrator.dto';
+import { GenerateAdministratorDto } from "../dtos/generate-administrator.dto";
+import { DataSource, EntityManager } from "typeorm";
+import { FindAdministratorDto } from "../dtos/find-administrator.dto";
 import {
   BadRequestException,
   ConflictException,
   Injectable,
-} from '@nestjs/common';
-import { AdministratorRepository } from '../repositories/administrator.repository';
-import { Administrator } from '../entities/administrator.entity';
-import { AccountService } from 'src/account/services/account.service';
-import { FindAccountDto } from 'src/account/dtos/find-account.dto';
-import { constants } from '../administrator.constants';
-import { bcryptCompare, bcryptHash } from 'src/shared/helpers/crypto.helper';
-import { GenerateAccountDto } from 'src/account/dtos/generate-account.dto';
-import { SignAdministratorDto } from '../dtos/sign-in-administrator.dto';
-import _ from 'lodash';
-import { AccountHistoryService } from 'src/account/services/account-history.service';
-import { GenerateSessionAccessTokenDto } from 'src/account/dtos/generate-session-access-token.dto';
-import { GenerateAccountHistoryDto } from 'src/account/dtos/generate-account-history.dto';
-import * as jwt from 'jsonwebtoken';
+} from "@nestjs/common";
+import { AdministratorRepository } from "../repositories/administrator.repository";
+import { Administrator } from "../entities/administrator.entity";
+import { AccountService } from "src/account/services/account.service";
+import { FindAccountDto } from "src/account/dtos/find-account.dto";
+import { constants } from "../administrator.constants";
+import { bcryptCompare, bcryptHash } from "src/shared/helpers/crypto.helper";
+import { GenerateAccountDto } from "src/account/dtos/generate-account.dto";
+import { SignAdministratorDto } from "../dtos/sign-in-administrator.dto";
+import _ from "lodash";
+import { AccountHistoryService } from "src/account/services/account-history.service";
+import { GenerateSessionAccessTokenDto } from "src/account/dtos/generate-session-access-token.dto";
+import { GenerateAccountHistoryDto } from "src/account/dtos/generate-account-history.dto";
+import * as jwt from "jsonwebtoken";
 
 @Injectable()
 export class AdministratorService {
@@ -26,12 +26,12 @@ export class AdministratorService {
     private administratorRepository: AdministratorRepository,
     private accountService: AccountService,
     private accountHistoryService: AccountHistoryService,
-    private dataSource: DataSource,
+    private dataSource: DataSource
   ) {}
 
   async generateAdministrator(
     generateAdministratorDto: GenerateAdministratorDto,
-    transactionManager?: EntityManager,
+    transactionManager?: EntityManager
   ) {
     let runner;
     let existedAccount;
@@ -52,7 +52,7 @@ export class AdministratorService {
         };
         existedAccount = await this.accountService.getAccount(
           findAccountDto,
-          runner.manager,
+          runner.manager
         );
       } catch (e) {
         if (e.status !== 404) {
@@ -62,7 +62,8 @@ export class AdministratorService {
       if (existedAccount) {
         throw new ConflictException({
           statusCode: 409,
-          errorCode: constants.errorMessage.ADMINISTRATOR_CONFLICT_EMAIL,
+          errorCode:
+            constants.errorMessage.ADMINISTRATOR_CONFLICT_EMAIL.errorCode,
         });
       }
       const hashedPassword = await bcryptHash(password);
@@ -72,7 +73,7 @@ export class AdministratorService {
       };
       const account = await this.accountService.generateAccount(
         generateAccountDto,
-        runner.manager,
+        runner.manager
       );
 
       let administrator =
@@ -81,9 +82,9 @@ export class AdministratorService {
             ...generateAdministratorDto,
             account,
           },
-          runner.manager,
+          runner.manager
         );
-      _.unset(administrator, 'account.password');
+      _.unset(administrator, "account.password");
 
       if (!externalTransactionManager) {
         await runner.commitTransaction();
@@ -104,11 +105,11 @@ export class AdministratorService {
 
   async getAdministrator(
     findAdministratorDto: FindAdministratorDto,
-    transactionManager?: EntityManager,
+    transactionManager?: EntityManager
   ): Promise<Administrator> {
     const administrator = await this.administratorRepository.findAdministrator(
       findAdministratorDto,
-      transactionManager,
+      transactionManager
     );
 
     return administrator;
@@ -137,13 +138,13 @@ export class AdministratorService {
       });
     }
 
-    _.unset(administrator, 'account.password');
+    _.unset(administrator, "account.password");
     let existedAccountHistories;
     try {
       const findAccountHistoryDto = { accountId: account.id };
       const { list, count } =
         await this.accountHistoryService.getAccountHistoriyListAndCount(
-          findAccountHistoryDto,
+          findAccountHistoryDto
         );
       existedAccountHistories = list;
     } catch (e) {
@@ -154,7 +155,7 @@ export class AdministratorService {
     }
     if (existedAccountHistories && existedAccountHistories.length > 0) {
       await this.accountHistoryService.removeAccountHistoryByAccountId(
-        account.id,
+        account.id
       );
     }
     let expiredAt = new Date();
@@ -165,7 +166,7 @@ export class AdministratorService {
     };
     const accountHistory =
       await this.accountHistoryService.generateAccountHistory(
-        generateAccountHistoryDto,
+        generateAccountHistoryDto
       );
 
     const genetateSessionAccessToken: GenerateSessionAccessTokenDto = {
@@ -175,7 +176,7 @@ export class AdministratorService {
 
     const sessionAccessToken = jwt.sign(
       genetateSessionAccessToken,
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET
     );
 
     let result = { administrator, sessionAccessToken };

@@ -5,15 +5,20 @@ import { constants } from "../alim-talk.constants";
 import { Injectable } from "@nestjs/common";
 import { ReplaceAlimTalkDto } from "../dtos/replace-alim-talk.dto";
 import { SignUpAdministratorAlimTalkDto } from "../dtos/sign-up-administrator-alim-talk.dto";
+import { SendingAlimTalkDto } from "../dtos/sending-alim-talk.dto";
+import { SendingAlimTalkService } from "./sending-alim-talk.service";
 
 @Injectable()
 export class AlimTalkService {
-  constructor(private alimTalkTemplateService: AlimTalkTemplateService) {}
+  constructor(
+    private alimTalkTemplateService: AlimTalkTemplateService,
+    private sendingAlimTalkService: SendingAlimTalkService
+  ) {}
 
   async SignUpAdministratorAlimTalk(
     signUpAdministratorAlimTalkDto: SignUpAdministratorAlimTalkDto
   ) {
-    const { name } = signUpAdministratorAlimTalkDto;
+    const { name, phone } = signUpAdministratorAlimTalkDto;
     const SING_UP_ADMINISTRATOR = constants.props.SING_UP_ADMINISTRATOR;
 
     const findAlimTalkTemplateDto: FindAlimTalkTemplateDto = {
@@ -39,6 +44,16 @@ export class AlimTalkService {
           alimTalkContent = this.replaceAlimTalk(replaceAlimTalkDto);
       }
     }
+
+    const sendingAlimTalkDto: SendingAlimTalkDto = {
+      alimTalkTemplateCode: alimTalkTemplate.alimTalkTemplateCode,
+      alimTalkTitle: alimTalkTemplate.alimTalkTitle,
+      alimTalkContent,
+      apiKey: process.env.ALIM_TALK_KEY,
+      phone: phone,
+    };
+
+    await this.se;
   }
 
   private replaceAlimTalk(replaceAlimTalkDto: ReplaceAlimTalkDto) {
