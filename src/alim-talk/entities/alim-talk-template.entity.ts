@@ -70,11 +70,9 @@ export class AlimTalkTemplate extends CoreEntity {
     required: true,
   })
   @IsString()
-  @Length(1, 99999)
   @Column({
     comment: "알림톡 내용",
-    type: "varchar",
-    length: 99999,
+    type: "text",
     nullable: false,
   })
   alimTalkContent: string;

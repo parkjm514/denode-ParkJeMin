@@ -8,7 +8,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtMiddleware } from "./shared/middleware/jwt.middleware";
 import { SessionMiddleware } from "./shared/middleware/session.middleware";
 import { AdministratorModule } from "./administrator/administrator.module";
-import { AlimTalkModule } from './alim-talk/alim-talk.module';
+import { AlimTalkModule } from "./alim-talk/alim-talk.module";
 
 @Module({
   imports: [

@@ -19,11 +19,11 @@ export class AlimTalkLog extends CoreEntity {
     required: true,
   })
   @IsString()
-  @Length(1, 99999)
+  @Length(1, 9999)
   @Column({
     comment: "알림톡 제목 로그",
     type: "varchar",
-    length: 99999,
+    length: 9999,
     nullable: true,
   })
   alimTalkTitleLog: string;
@@ -34,11 +34,9 @@ export class AlimTalkLog extends CoreEntity {
     required: true,
   })
   @IsString()
-  @Length(1, 99999)
   @Column({
     comment: "알림톡 내용 로그",
-    type: "varchar",
-    length: 99999,
+    type: "text",
     nullable: true,
   })
   alimTalkContentLog: string;

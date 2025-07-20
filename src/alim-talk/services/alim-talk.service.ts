@@ -53,7 +53,7 @@ export class AlimTalkService {
       phone: phone,
     };
 
-    await this.se;
+    await this.sendingAlimTalkService.sendAlimTalk(sendingAlimTalkDto);
   }
 
   private replaceAlimTalk(replaceAlimTalkDto: ReplaceAlimTalkDto) {

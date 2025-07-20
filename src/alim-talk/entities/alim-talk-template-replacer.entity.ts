@@ -24,11 +24,9 @@ export class AlimTalkTemplateReplacer extends CoreEntity {
     required: true,
   })
   @IsString()
-  @Length(1, 500)
   @Column({
     comment: "알림톡 템플릿 변환 키워드",
-    type: "varchar",
-    length: 500,
+    type: "text",
     nullable: false,
   })
   alimTalkTemplateReplacerKeyword: string;
