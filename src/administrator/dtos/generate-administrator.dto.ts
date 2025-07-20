@@ -1,14 +1,15 @@
-import { ApiProperty, PickType } from '@nestjs/swagger';
-import { Administrator } from '../entities/administrator.entity';
-import { IsString, Length } from 'class-validator';
-import { Account } from 'src/account/entities/account.entity';
+import { ApiProperty, PickType } from "@nestjs/swagger";
+import { Administrator } from "../entities/administrator.entity";
+import { IsString, Length } from "class-validator";
+import { Account } from "src/account/entities/account.entity";
 
 export class GenerateAdministratorDto extends PickType(Administrator, [
-  'administratorName',
+  "administratorName",
+  "phone",
 ]) {
   @ApiProperty({
-    description: '계정 이메일',
-    example: 'test1234@gmail.com',
+    description: "계정 이메일",
+    example: "test1234@gmail.com",
     required: true,
   })
   @IsString()
@@ -16,8 +17,8 @@ export class GenerateAdministratorDto extends PickType(Administrator, [
   email: string;
 
   @ApiProperty({
-    description: '계정 비밀번호 값',
-    example: 'asdf1234',
+    description: "계정 비밀번호 값",
+    example: "asdf1234",
     required: true,
   })
   @IsString()
