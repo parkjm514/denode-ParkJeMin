@@ -187,4 +187,14 @@ export class AdministratorService {
   async signOutAdministrator(accountId: number) {
     await this.accountHistoryService.removeAccountHistoryByAccountId(accountId);
   }
+
+  async getAdministratorListAndCount(
+    findAdministratorDto: FindAdministratorDto,
+    transactionManager?: EntityManager
+  ) {
+    return await this.administratorRepository.findAdministratorListAndCount(
+      findAdministratorDto,
+      transactionManager
+    );
+  }
 }

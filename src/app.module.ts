@@ -9,6 +9,7 @@ import { JwtMiddleware } from "./shared/middleware/jwt.middleware";
 import { SessionMiddleware } from "./shared/middleware/session.middleware";
 import { AdministratorModule } from "./administrator/administrator.module";
 import { AlimTalkModule } from "./alim-talk/alim-talk.module";
+import { BatchModule } from './batch/batch.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { AlimTalkModule } from "./alim-talk/alim-talk.module";
     AdministratorModule,
     ProductModule,
     AlimTalkModule,
+    BatchModule,
   ],
   controllers: [AppController],
   providers: [AppService],

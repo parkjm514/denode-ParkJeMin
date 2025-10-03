@@ -7,4 +7,6 @@ export class AlimTalkTemplateReplacerRepositroy extends Repository<AlimTalkTempl
   constructor(private dataSource: DataSource) {
     super(AlimTalkTemplateReplacer, dataSource.createEntityManager());
   }
+
+  
 }
