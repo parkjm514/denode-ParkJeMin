@@ -14,7 +14,6 @@ export class BatchService {
 
   @Cron("* * * * *")
   async getAdministratorCount() {
-    console.log("TEST");
     const now = new Date();
     const batchName = constants.props.GET_ADMINISTRATORS_COUNT;
     const isBatchSuccess = false;
@@ -27,13 +26,13 @@ export class BatchService {
         await this.administratorService.getAdministratorListAndCount(
           findAdministratorDto
         );
-      totalCount = administratorListAndCount[0];
-      successCount = administratorListAndCount[0];
+      totalCount = administratorListAndCount.count;
+      successCount = administratorListAndCount.count;
     } catch (e) {
       if (e.status !== 404) {
         throw e;
       }
-      failCount += 1;
+      failCount = failCount + 1;
     }
     const GenerateBatchLogDto: GenerateBatchLogDto = {
       isBatchSuccess,
