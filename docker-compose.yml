@@ -31,7 +31,7 @@ services:
       DB_DATABASE: ${DB_DATABASE}
     ports:
       - "3000:3000"
-    command: npm run start:prod
+      - "9229:9229"
 
 volumes:
   db_data:

@@ -1,9 +1,9 @@
-import { GenerateAdministratorDto } from '../dtos/generate-administrator.dto';
-import { Administrator } from '../entities/administrator.entity';
-import { FindAdministratorDto } from '../dtos/find-administrator.dto';
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Repository, DataSource, EntityManager } from 'typeorm';
-import { constants } from '../administrator.constants';
+import { GenerateAdministratorDto } from "../dtos/generate-administrator.dto";
+import { Administrator } from "../entities/administrator.entity";
+import { FindAdministratorDto } from "../dtos/find-administrator.dto";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { Repository, DataSource, EntityManager } from "typeorm";
+import { constants } from "../administrator.constants";
 
 @Injectable()
 export class AdministratorRepository extends Repository<Administrator> {
@@ -13,7 +13,7 @@ export class AdministratorRepository extends Repository<Administrator> {
 
   async generateAdministrator(
     generateAdministratorDto: GenerateAdministratorDto,
-    transactionManager?: EntityManager,
+    transactionManager?: EntityManager
   ) {
     try {
       let result;
@@ -36,7 +36,7 @@ export class AdministratorRepository extends Repository<Administrator> {
 
   async findAdministrator(
     findAdministratorDto: FindAdministratorDto,
-    transactionManager?: EntityManager,
+    transactionManager?: EntityManager
   ): Promise<Administrator> {
     const query = this.buildQuery(findAdministratorDto, transactionManager);
 
@@ -52,9 +52,27 @@ export class AdministratorRepository extends Repository<Administrator> {
     return result;
   }
 
+  async findAdministratorListAndCount(
+    findAdministratorDto: FindAdministratorDto,
+    transactionManager?: EntityManager
+  ) {
+    const query = this.buildQuery(findAdministratorDto, transactionManager);
+
+    const result = await query.getManyAndCount();
+
+    if (!result || result[0].length === 0) {
+      throw new NotFoundException({
+        statusCode: 404,
+        errorCode: constants.errorMessage.ADMINISTRATOR_LIST_NOT_FOUND,
+      });
+    }
+
+    return { list: result[0], count: result[1] };
+  }
+
   private buildQuery(
     findAdministratorDto: FindAdministratorDto,
-    transactionManager?: EntityManager,
+    transactionManager?: EntityManager
   ) {
     const { accountId, accountJoin, accountEmail, passwordLoadable } =
       findAdministratorDto;
@@ -62,23 +80,23 @@ export class AdministratorRepository extends Repository<Administrator> {
     let query;
 
     if (transactionManager) {
-      query = transactionManager.createQueryBuilder(Administrator, 'a');
+      query = transactionManager.createQueryBuilder(Administrator, "a");
     } else {
-      query = this.createQueryBuilder('a');
+      query = this.createQueryBuilder("a");
     }
 
     if (accountJoin) {
-      query.leftJoinAndSelect('a.account', 'account');
+      query.leftJoinAndSelect("a.account", "account");
       if (accountId) {
-        query.andWhere('account.id = :accountId', { accountId });
+        query.andWhere("account.id = :accountId", { accountId });
       }
       if (accountEmail) {
-        query.andWhere('account.accountEmail = :accountEmail', {
+        query.andWhere("account.accountEmail = :accountEmail", {
           accountEmail,
         });
       }
       if (passwordLoadable) {
-        query.addSelect('account.password');
+        query.addSelect("account.password");
       }
     }
 
