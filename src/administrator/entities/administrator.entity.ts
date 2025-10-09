@@ -41,10 +41,9 @@ export class Administrator extends CoreEntity {
     required: true,
     example: "01012341234",
   })
-  @Matches(
-    "/^01[0|1|6|7|8|9]\d{3,4}\d{4}$/",
-    constants.errorMessage.IS_NOT_MATCH_PHONE_NUMBER.errorCode
-  )
+  @Matches(/^01[0|1|6|7|8|9]\d{3,4}\d{4}$/, {
+    message: constants.errorMessage.IS_NOT_MATCH_PHONE_NUMBER.errorCode,
+  })
   @Column({
     comment: "핸드폰 번호",
     type: "varchar",

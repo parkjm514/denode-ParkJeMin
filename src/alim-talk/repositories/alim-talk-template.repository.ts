@@ -1,4 +1,4 @@
-import { FindAlimTalkTemplateDto } from "./../dtos/find-alim-talk-template.dto";
+import { FindAlimTalkTemplateDto } from "../dtos/find-alim-talk-template.dto";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { DataSource, EntityManager, Repository } from "typeorm";
 import { AlimTalkTemplate } from "../entities/alim-talk-template.entity";
