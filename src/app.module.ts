@@ -10,6 +10,7 @@ import { SessionMiddleware } from "./shared/middleware/session.middleware";
 import { AdministratorModule } from "./administrator/administrator.module";
 import { AlimTalkModule } from "./alim-talk/alim-talk.module";
 import { BatchModule } from './batch/batch.module';
+import { CommunityModule } from './community/community.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { BatchModule } from './batch/batch.module';
     ProductModule,
     AlimTalkModule,
     BatchModule,
+    CommunityModule,
   ],
   controllers: [AppController],
   providers: [AppService],
